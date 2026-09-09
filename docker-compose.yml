@@ -1,0 +1,15 @@
+services:
+  postgres-db:
+    image: postgres
+    container_name: todo_postgres
+    environment:
+      - POSTGRES_USER=bita
+      - POSTGRES_PASSWORD=KingBitaI
+      - POSTGRES_DB=tododb
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/pgdata/18
+
+volumes:
+  postgres_data:

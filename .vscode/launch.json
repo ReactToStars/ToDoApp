@@ -1,0 +1,12 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "C#: ToDo.API Debug",
+            "type": "dotnet",
+            "request": "launch",
+            "projectPath": "${workspaceFolder}/ToDo.API/ToDo.API.csproj",
+            "preLaunchTask": "build"
+        }
+    ]
+}

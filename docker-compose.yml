@@ -1,15 +1,46 @@
 services:
   postgres-db:
-    image: postgres
+    image: postgres:16-alpine
     container_name: todo_postgres
     environment:
-      - POSTGRES_USER=bita
-      - POSTGRES_PASSWORD=KingBitaI
-      - POSTGRES_DB=tododb
+      POSTGRES_USER: bita
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-KingBitaI}
+      POSTGRES_DB: tododb
     ports:
       - "5432:5432"
     volumes:
-      - postgres_data:/var/lib/postgresql/pgdata/18
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U bita -d tododb"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  api:
+    build:
+      context: .
+      dockerfile: ToDo.API/Dockerfile
+    container_name: todo_api
+    environment:
+      ASPNETCORE_URLS: http://+:8080
+      ASPNETCORE_ENVIRONMENT: Development
+      ConnectionStrings__ToDoDb: Host=postgres-db;Database=tododb;Username=bita;Password=${POSTGRES_PASSWORD:-KingBitaI}
+      Database__ApplyMigrations: "true"
+    ports:
+      - "8080:8080"
+    depends_on:
+      postgres-db:
+        condition: service_healthy
+
+  web:
+    build:
+      context: .
+      dockerfile: ToDo.Web/Dockerfile
+    container_name: todo_web
+    ports:
+      - "4200:80"
+    depends_on:
+      - api
 
 volumes:
   postgres_data:

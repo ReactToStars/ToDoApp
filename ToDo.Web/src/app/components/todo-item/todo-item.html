@@ -1,0 +1,35 @@
+<article class="todo-item">
+    <div class="todo-content">
+        <input type="checkbox" [checked]="todo.isCompleted" (change)="handleToggle()" [attr.aria-label]="'Mark ' + todo.title + ' as complete'" />
+
+        <div class="todo-info">
+            <h3 [class.completed]="todo.isCompleted">{{ todo.title }}</h3>
+            @if(todo.description) {
+                <p>{{ todo.description }}</p>
+            }
+
+            <div class="todo-meta">
+                <span class="category">{{ todo.category?.name ?? 'No Category' }}</span>
+                <span class="priority" 
+                    [class.priority-low]="todo.priority === Priority.Low"
+                    [class.priority-medium]="todo.priority === Priority.Medium"
+                    [class.priority-high]="todo.priority === Priority.High">
+                    {{ todo.priority }}
+                </span>
+
+                <span class="status">
+                    {{ todo.isCompleted ? 'Completed' : 'Pending' }}
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <div class="todo-actions">
+        <button type="button" class="btn-delete" (click)="handleDelete()" [attr.aria-label]="'Delete ' + todo.title">
+            <svg aria-hidden="true" viewBox="0 0 24 24">
+                <path d="M4 7h16M10 11v6m4-6v6M6 7l1 13h10l1-13M9 7V4h6v3" />
+            </svg>
+            <span>Delete</span>
+        </button>
+    </div>
+</article>

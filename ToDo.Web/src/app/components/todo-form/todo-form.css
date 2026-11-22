@@ -1,0 +1,115 @@
+.todo-form {
+  display: grid;
+  gap: 13px;
+  margin-top: 19px;
+}
+
+.form-group {
+  min-width: 0;
+}
+
+.form-control,
+.form-control-text,
+.form-control-select {
+  width: 100%;
+  border: 1px solid #e4e9f1;
+  border-radius: 10px;
+  outline: none;
+  background: #fafbfd;
+  color: #27344a;
+  font-size: 13px;
+  transition: border-color 160ms ease, box-shadow 160ms ease, background 160ms ease;
+}
+
+.form-control,
+.form-control-select {
+  min-height: 44px;
+  padding: 0 13px;
+}
+
+.form-control-text {
+  display: block;
+  min-height: 72px;
+  padding: 12px 13px;
+  resize: vertical;
+}
+
+.form-control::placeholder,
+.form-control-text::placeholder {
+  color: #a0a9b8;
+}
+
+.form-control:focus,
+.form-control-text:focus,
+.form-control-select:focus {
+  border-color: #7c9fe8;
+  background: #fff;
+  box-shadow: 0 0 0 3px rgba(74, 120, 220, 0.12);
+}
+
+.form-row {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+}
+
+.form-control-select {
+  width: auto;
+  min-width: 145px;
+  color: #66748a;
+  cursor: pointer;
+}
+
+.btn-submit {
+  display: inline-flex;
+  min-height: 43px;
+  align-items: center;
+  justify-content: center;
+  margin-left: auto;
+  padding: 0 18px;
+  border: 0;
+  border-radius: 10px;
+  background: #4a78dc;
+  box-shadow: 0 5px 12px rgba(74, 120, 220, 0.18);
+  color: #fff;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 700;
+  transition: background 160ms ease, box-shadow 160ms ease, transform 160ms ease;
+}
+
+.btn-submit:hover:not(:disabled) {
+  transform: translateY(-1px);
+  background: #3d6bcf;
+  box-shadow: 0 7px 16px rgba(74, 120, 220, 0.25);
+}
+
+.btn-submit:focus-visible {
+  outline: 3px solid rgba(74, 120, 220, 0.28);
+  outline-offset: 3px;
+}
+
+.btn-submit:disabled {
+  background: #aabce1;
+  box-shadow: none;
+  cursor: not-allowed;
+}
+
+.error-text {
+  display: block;
+  margin: 6px 2px 0;
+  color: #c45050;
+  font-size: 11px;
+}
+
+@media (max-width: 460px) {
+  .form-row {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .form-control-select,
+  .btn-submit {
+    width: 100%;
+  }
+}

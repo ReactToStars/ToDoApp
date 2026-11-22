@@ -1,0 +1,24 @@
+<aside class="category-sidebar">
+    <h3>Categories</h3>
+    
+    <!-- All Todos -->
+    <button 
+        type = "button"
+        [class.active]="selectedCategoryId === null"
+        (click)="selectCategory(null)">
+        All
+    </button>
+
+    <!-- Categories -->
+    @for (category of categories; track category.id) {
+        <button 
+            type="button"
+            [class.active]="selectedCategoryId === category.id"
+            (click)="selectCategory(category.id)">
+            @if(category.colorHex) {
+                <span class="category-color" [style.background-color]="category.colorHex"></span>
+            }
+            {{ category.name }}
+        </button>
+    }
+</aside>

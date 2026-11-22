@@ -8,7 +8,7 @@ This workspace contains:
 
 - `ToDo.API` - ASP.NET Core Web API with PostgreSQL persistence
 - `ToDo.Web` - Angular frontend application
-- `docker-compose.yml` - PostgreSQL database container setup
+- `docker-compose.yml` - PostgreSQL, API, and Angular frontend container setup
 
 ## Features
 
@@ -31,47 +31,29 @@ This workspace contains:
 
 ## Prerequisites
 
-- .NET SDK 10.0
-- Node.js 20+ and npm
-- Docker Desktop (for the PostgreSQL container)
+- Docker Desktop or Docker Engine with the Compose plugin
 
 ## Quick Start
 
-### 1. Start PostgreSQL
+Start the full application stack from the repository root:
 
 ```bash
-docker compose up -d
+docker compose up --build
 ```
 
-This starts a PostgreSQL container named `todo_postgres` using the configuration in `docker-compose.yml`.
+Open the application at `http://localhost:4200`. The API is also available directly at `http://localhost:8080`, and its Scalar documentation is at `http://localhost:8080/scalar`.
 
-### 2. Run the API
+Compose waits for PostgreSQL to become healthy before starting the API. The API applies its EF Core migrations when it starts. The Angular app sends API requests through the frontend container, so it does not need a separate browser-accessible API URL.
+
+The PostgreSQL data is persisted in the `postgres_data` volume. To stop the containers while retaining data, run:
 
 ```bash
-dotnet restore
-cd ToDo.API
-dotnet run
+docker compose down
 ```
 
-The API will use the connection string configured in `ToDo.API/appsettings.json`.
+To remove the database volume as well, run `docker compose down --volumes`.
 
-### 3. View API documentation
-
-When running in development mode, the Scalar API reference is available at:
-
-```text
-https://localhost:<port>/scalar
-```
-
-### 4. Run the Angular frontend
-
-```bash
-cd ToDo.Web
-npm install
-npm start
-```
-
-The Angular app will start with the Angular CLI development server.
+The database password defaults to the existing local-development value. Set `POSTGRES_PASSWORD` in the environment before starting Compose to use a different password; both PostgreSQL and the API use the same value.
 
 ## API Endpoints
 

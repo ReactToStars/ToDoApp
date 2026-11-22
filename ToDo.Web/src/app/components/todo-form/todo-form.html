@@ -1,0 +1,33 @@
+<form [formGroup]="todoForm" (ngSubmit)="onSubmit()" class="todo-form">
+  <div class="form-group">
+    <input
+      type="text"
+      formControlName="title"
+      placeholder="What needs to be done?"
+      class="form-control"
+      aria-label="Task title"/>
+    @if (todoForm.get('title')?.touched && todoForm.get('title')?.errors?.['required']){
+      <small class="error-text">Title is required.</small>
+    }
+    @if (todoForm.get('title')?.touched && todoForm.get('title')?.errors?.['minlength']) {
+      <small class="error-text">Title must be at least 3 characters long.</small>
+    }
+  </div>
+
+  <div class="form-group">
+    <textarea
+      formControlName="description"
+      placeholder="Add a few details (optional)"
+      class="form-control-text"
+      aria-label="Task description"></textarea>
+  </div>
+
+  <div class="form-row">
+    <select formControlName="categoryId" class="form-control-select" aria-label="Task category">
+      <option [ngValue]="1">Work</option>
+      <option [ngValue]="2">Personal</option>
+      <option [ngValue]="3">Shopping</option>
+    </select>
+    <button type="submit" class="btn-submit" [disabled]="todoForm.invalid">Add task</button>
+  </div>
+</form>

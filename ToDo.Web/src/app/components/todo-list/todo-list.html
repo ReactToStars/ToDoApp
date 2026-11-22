@@ -1,0 +1,73 @@
+<div class="todo-layout">
+  <header class="workspace-header">
+    <a class="brand" href="/" aria-label="Daylight home">
+      <span class="brand-mark" aria-hidden="true">✓</span>
+      <span>daylight</span>
+    </a>
+    <span class="workspace-label">PERSONAL WORKSPACE</span>
+  </header>
+
+  <div class="dashboard-grid">
+    <app-category-sidebar
+      [categories]="categories()"
+      (categorySelected)="handleCategorySelect($event)">
+    </app-category-sidebar>
+
+    <main class="todo-content">
+      <section class="welcome-panel">
+        <div class="welcome-copy">
+          <p class="eyebrow">YOUR DAY, IN FOCUS</p>
+          <h1>Make today count.</h1>
+          <p>A little progress each day adds up to big results.</p>
+        </div>
+        <div class="welcome-art" aria-hidden="true">
+          <span class="sun-halo"></span>
+          <span class="sun"></span>
+          <span class="art-sparkle sparkle-one">✦</span>
+          <span class="art-sparkle sparkle-two">✦</span>
+        </div>
+      </section>
+
+      <section class="task-composer" aria-labelledby="composer-title">
+        <div class="section-heading composer-heading">
+          <div>
+            <p class="eyebrow">A FRESH START</p>
+            <h2 id="composer-title">Add a task</h2>
+          </div>
+          <span class="heading-icon" aria-hidden="true">+</span>
+        </div>
+        <app-todo-form (todoCreated)="handleCreateTodo($event)">
+        </app-todo-form>
+      </section>
+
+      <section class="tasks-section" aria-labelledby="tasks-title">
+        <div class="section-heading tasks-heading">
+          <div>
+            <p class="eyebrow">KEEP THE MOMENTUM</p>
+            <h2 id="tasks-title">Your tasks</h2>
+          </div>
+          <span class="task-count">
+            {{ filteredTodos().length }}
+            {{ filteredTodos().length === 1 ? 'task' : 'tasks' }}
+          </span>
+        </div>
+
+        <div class="todo-list-container">
+          @for (item of filteredTodos(); track item.id) {
+            <app-todo-item
+              [todo]="item"
+              (toggle)="handleToggleTodo(item.id, $event)"
+              (delete)="handleDeleteTodo(item.id)">
+            </app-todo-item>
+          } @empty {
+            <div class="empty-state">
+              <span class="empty-icon" aria-hidden="true">✦</span>
+              <h3>Nothing on your list yet</h3>
+              <p>Add a task above and take the first step.</p>
+            </div>
+          }
+        </div>
+      </section>
+    </main>
+  </div>
+</div>
